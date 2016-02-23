@@ -2,3 +2,5 @@ Assignment Dates
 File System Promises - Jan 27
 Static File Server - Feb 3
 User Management System - Feb 10
+User Management Web Services - Feb 17
+GulpFile - Feb 22
