@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+	<dom-module id="user-login">
+		<style>
+		.flex-center-justified {
+			@apply(--layout-horizontal);
+			@apply(--layout-center-justified);
+		}
+		.flex-end-justified {
+			@apply(--layout-horizontal);
+			@apply(--layout-end-justified);
+		}
+		.spacer {
+			padding-top: 5%;
+		}
+		.login {
+			display:block;
+			width: 100%;
+			background-color:#44c767;
+			border-radius:5px;
+			border:1px solid #18ab29;
+			color:#ffffff;
+			font-family: 'Roboto', 'Noto', sans-serif;
+			font-size:17px;
+			padding:9px 24px;
+		}
+		.login:hover {
+			background-color:#5cbf2a;
+		}
+		</style>
+		<template>
+
+			<iron-ajax id="authenticate"
+				url="/api/login"
+				handle-as="json"
+				body="{{data}}"
+				method="POST"
+				last-response="{{response}}"
+				on-response="redirect">
+			</iron-ajax>
+
+			<h1>Users can login here!</h1>
+
+			<!-- <paper-toast id="message" class="fit-bottom" text="{{message}}" duration="0"></paper-toast> -->
+
+			<form is="iron-form" method="post" action="/api/login">
+			   	
+				<paper-input name="username" label="Email" required></paper-input>
+
+	            <paper-input name="password" type="password" label="Password" required></paper-input>
+	            
+	     		<br>
+
+				<!-- <button class="login" type="submit">login</button> -->
+
+				<paper-button raised on-tap="login">Login</paper-button>
+
+				<br>
+				<div class="flex-center-justified">
+				<a href="/#!/signup"> Create an Account </a>
+				</div>
+
+			</form>
+			
+				
+		</template>
+		<script>
+
+			Polymer({
+				is: "user-login",
+				properties: {
+					data: {
+						computed: 'computeData(username, password)'
+					}
+				},
+				
+				computeData: function(username, password) {
+					return 'username=' + username + '&password=' + password;
+				},
+
+				redirect: function(e) {
+					
+					if (this.response.status == 'success') {
+						page('#!/home/');
+					} else if (this.response.status == 'failed') {
+							this.$.errortoast.text = 'Error: ' + this.response.error;
+							this.$.errortoast.show();
+					} else {
+						this.$.errortoast.text = 'Error. Could not login.';
+						this.$.errortoast.show();
+					}
+				},
+
+				login: function() {
+					this.$.authenticate.generateRequest();
+				}
+			});
+		</script>
+	</dom-module>
+</html>
