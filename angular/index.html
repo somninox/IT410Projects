@@ -10,12 +10,20 @@
 	<p>Data: {{data}}</p>
 
 	<form ng-submit="ctrl.checkGuess($event)">
-	<p>
-		<input type="number" ng-model="ctrl.guess" ng-disabled="ctrl.done">
-	</p>
+		<p>
+			<input type="number" ng-model="ctrl.guess" ng-disabled="ctrl.done">
+		</p>
 	</form>
 
 	<p>You have {{ctrl.remaining}} guesses </p>
 	<p>{{ctrl.message}}</p>
+
+	<p>
+		You have already guessed these numbers:
+		<span ng-repeat="g in ctrl.guesses">{{g}} &nbsp; </span>
+	</p>
+
+	<p ng-show="ctrl.done">This WAS the right answer: {{ctrl.reveal}}</p>
+
 </body>
 </html>
