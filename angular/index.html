@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html ng-app="app" ng-controller="AppController as ctrl">
+<head>
+	<title></title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+	<script src="app.js"></script>
+</head>
+<body>
+	<p><input ng-model="data"></p>
+	<p>Data: {{data}}</p>
+
+	<form ng-submit="ctrl.checkGuess($event)">
+	<p>
+		<input type="number" ng-model="ctrl.guess" ng-disabled="ctrl.done">
+	</p>
+	</form>
+
+	<p>You have {{ctrl.remaining}} guesses </p>
+	<p>{{ctrl.message}}</p>
+</body>
+</html>
